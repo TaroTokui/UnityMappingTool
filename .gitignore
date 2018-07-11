@@ -11,7 +11,9 @@ Assets/Plugins/
 Assets/AVPro*
 Assets/OpenCV*
 Assets/uHomography/
-Assets/Image Warp/
+Assets/Image Warp/Demo/
+Assets/Image Warp/Scripts/
+Assets/Image Warp/Editor/
 
 bin/
 
