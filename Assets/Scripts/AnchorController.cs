@@ -37,7 +37,9 @@ public class AnchorController : MonoBehaviour {
     private Vector3 BaseRightBezierHandlB;
     private Vector3 BaseBottomBezierHandlA;
     private Vector3 BaseBottomBezierHandlB;
-    
+
+    private bool isActive;
+
     // Use this for initialization
     void OnEnable () {
         _RenderTextureWarp = gameObject.GetComponent<NativeRenderTextureWarp>();
@@ -69,26 +71,34 @@ public class AnchorController : MonoBehaviour {
         BaseRightBezierHandlB = RightBezierHandlB.transform.position;
         BaseBottomBezierHandlA = BottomBezierHandlA.transform.position;
         BaseBottomBezierHandlB = BottomBezierHandlB.transform.position;
+    }
+
+    private void Start()
+    {
+        setWarp();
 
         //Debug.Log("base top: " + BaseTopLeft);
+        isActive = false;
+        //gameObject.SetActive(true);
+        TopLeft.gameObject.SetActive(isActive);
+        TopRight.gameObject.SetActive(isActive);
+        BottomRight.gameObject.SetActive(isActive);
+        BottomLeft.gameObject.SetActive(isActive);
     }
 
     // Update is called once per frame
     void Update()
     {
-        _RenderTextureWarp.cornerOffsetTL = TopLeft.transform.position - BaseTopLeft;
-        _RenderTextureWarp.cornerOffsetTR = TopRight.transform.position - BaseTopRight;
-        _RenderTextureWarp.cornerOffsetBR = BottomRight.transform.position - BaseBottomRight;
-        _RenderTextureWarp.cornerOffsetBL = BottomLeft.transform.position - BaseBottomLeft;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isActive = !isActive;
+            TopLeft.gameObject.SetActive(isActive);
+            TopRight.gameObject.SetActive(isActive);
+            BottomRight.gameObject.SetActive(isActive);
+            BottomLeft.gameObject.SetActive(isActive);
+        }
 
-        _RenderTextureWarp.topBezierHandleA = TopBezierHandlA.transform.position - TopLeft.transform.position;
-        _RenderTextureWarp.topBezierHandleB = TopBezierHandlB.transform.position - TopRight.transform.position;
-        _RenderTextureWarp.leftBezierHandleA = LeftBezierHandlA.transform.position - BottomLeft.transform.position;
-        _RenderTextureWarp.leftBezierHandleB = LeftBezierHandlB.transform.position - TopLeft.transform.position;
-        _RenderTextureWarp.rightBezierHandleA = RightBezierHandlA.transform.position - TopRight.transform.position;
-        _RenderTextureWarp.rightBezierHandleB = RightBezierHandlB.transform.position - BottomRight.transform.position;
-        _RenderTextureWarp.bottomBezierHandleA = BottomBezierHandlA.transform.position - BottomRight.transform.position;
-        _RenderTextureWarp.bottomBezierHandleB = BottomBezierHandlB.transform.position - BottomLeft.transform.position;
+        setWarp();
 
         if (Input.GetKey(KeyCode.R))
         {
@@ -107,5 +117,22 @@ public class AnchorController : MonoBehaviour {
             BottomBezierHandlB.transform.position = BottomLeft.transform.position + new Vector3(IMAGE_WIDTH2 * 2.0f / 3.0f, 0, -0.01f);
 
         }
+    }
+
+    void setWarp()
+    {
+        _RenderTextureWarp.cornerOffsetTL = TopLeft.transform.position - BaseTopLeft;
+        _RenderTextureWarp.cornerOffsetTR = TopRight.transform.position - BaseTopRight;
+        _RenderTextureWarp.cornerOffsetBR = BottomRight.transform.position - BaseBottomRight;
+        _RenderTextureWarp.cornerOffsetBL = BottomLeft.transform.position - BaseBottomLeft;
+
+        _RenderTextureWarp.topBezierHandleA = TopBezierHandlA.transform.position - TopLeft.transform.position;
+        _RenderTextureWarp.topBezierHandleB = TopBezierHandlB.transform.position - TopRight.transform.position;
+        _RenderTextureWarp.leftBezierHandleA = LeftBezierHandlA.transform.position - BottomLeft.transform.position;
+        _RenderTextureWarp.leftBezierHandleB = LeftBezierHandlB.transform.position - TopLeft.transform.position;
+        _RenderTextureWarp.rightBezierHandleA = RightBezierHandlA.transform.position - TopRight.transform.position;
+        _RenderTextureWarp.rightBezierHandleB = RightBezierHandlB.transform.position - BottomRight.transform.position;
+        _RenderTextureWarp.bottomBezierHandleA = BottomBezierHandlA.transform.position - BottomRight.transform.position;
+        _RenderTextureWarp.bottomBezierHandleB = BottomBezierHandlB.transform.position - BottomLeft.transform.position;
     }
 }

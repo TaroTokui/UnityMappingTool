@@ -27,7 +27,6 @@ public class DragPoint : MonoBehaviour
         //PlayerPrefs.SetInt("x", )
 
         transform.position = pos + _parent.transform.position;
-
     }
 
     //private void OnDestroy()
