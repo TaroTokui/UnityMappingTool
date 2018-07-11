@@ -17,12 +17,12 @@ public class DragPoint : MonoBehaviour
         _parent = gameObject.transform.parent.gameObject;
 
         Vector3 pos;
-        //name = transform.name;
+        MyName = _parent.name + "-" + transform.name;
         //Debug.Log(name);
 
         // load data
-        pos.x = PlayerPrefs.GetFloat(name + "x");
-        pos.y = PlayerPrefs.GetFloat(name + "y");
+        pos.x = PlayerPrefs.GetFloat(MyName + "x");
+        pos.y = PlayerPrefs.GetFloat(MyName + "y");
         pos.z = -0.1f;
         //PlayerPrefs.SetInt("x", )
 
@@ -35,11 +35,11 @@ public class DragPoint : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             // save data
-            PlayerPrefs.SetFloat(name + "x", transform.position.x - _parent.transform.position.x);
-            PlayerPrefs.SetFloat(name + "y", transform.position.y - _parent.transform.position.y);
+            PlayerPrefs.SetFloat(MyName + "x", transform.position.x - _parent.transform.position.x);
+            PlayerPrefs.SetFloat(MyName + "y", transform.position.y - _parent.transform.position.y);
             //PlayerPrefs.SetFloat(name + "z", pos.z);
             PlayerPrefs.Save();
         }
@@ -54,6 +54,7 @@ public class DragPoint : MonoBehaviour
 
         // このオブジェクトの位置(transform.position)をスクリーン座標に変換。
         screenPoint = Camera.main.WorldToScreenPoint(transform.position);
+        //screenPoint = Camera.current.WorldToScreenPoint(transform.position);
         // ワールド座標上の、マウスカーソルと、対象の位置の差分。
         offset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
     }
